@@ -1,0 +1,38 @@
+<form [formGroup]="customerForm" class ="normal-form">
+    <mat-grid-list cols="1  <" rowHeight="100px">
+        <mat-grid-tile>
+            <div class="controles-container">
+               <input type="hidden" formControlName="$key">
+               <mat-form-field>
+                   <input formControlName="fullName" matInput placeholder="请输入你要爬虫的内容">
+                   <mat-error>This field is Mandatory</mat-error>
+               </mat-form-field>               
+            </div>
+
+
+            <div class="controles-container">
+             <div class="button-row">
+                 <button mat-raised-button color='primary' type="submit" [disabled]="customerForm.invalid" (click) ="onsubmit(customerForm)">Submit</button> 
+                 <button mat-raised-button color='warn' (click)="onclear()">Clear</button>
+             </div>
+
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>
+<div *ngIf="result">
+</div>
+
+<mat-card *ngIf="submitFlag" class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{fullName}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngFor="let item of fanyi">
+        {{item.k}}
+        {{item.v}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+  

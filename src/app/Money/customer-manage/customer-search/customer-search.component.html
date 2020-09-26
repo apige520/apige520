@@ -1,0 +1,233 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit(addressForm)">
+  <mat-card class="shipping-card">
+ <mat-card-header>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==1">新增客户</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==2">充值</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==3">消费</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==4">新增消费项目</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==5">更新客户信息</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==6">查询客户信息</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==7">查询历史消费</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==8">查询历史充值记录</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==9">一键恢复出厂设置</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==10">营业统计</mat-card-title>
+      <mat-card-title style="color: red;" *ngIf="_parent.flag==11">删除客户</mat-card-title>
+
+    </mat-card-header>  
+    <mat-card-content >
+      <div class="row" *ngIf="_parent.flag!=4 && _parent.flag!=10">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="姓名" formControlName="name">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="_parent.flag!=4&& _parent.flag!=10">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="手机号" type="number" min=0  formControlName="mobile">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="_parent.flag!=4&& _parent.flag!=10">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="会员卡号" type="number" min=0 formControlName="cardNumber">
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="_parent.flag==10" class="row">
+        <div class="col">
+        <span style="color: tomato; font-size: larger;">    总共会员数： {{countCustomerTotal}} 人 </span>
+        <mat-icon>person</mat-icon>
+        </div>
+        <div class="col">
+          <span style="color: tomato; font-size: larger;">  总共余额数： {{countAvailableMoneyTotal}} 元  </span>
+          <mat-icon svgIcon="Money"></mat-icon>
+          </div>
+          <br><br />
+      </div>
+
+      <mat-form-field *ngIf="_parent.flag==7 ||_parent.flag==8||_parent.flag==10">
+        <input matInput [matDatepicker]="dp" placeholder="开始日期" formControlName="DateStart" [max] ='maxDate'>
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="_parent.flag==7||_parent.flag==8||_parent.flag==10" style="padding-left: 2%;">
+        <input matInput [matDatepicker]="picker" placeholder="结束日期" formControlName="DateEnd" [max] ='maxDate'>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+
+      <div *ngIf="_parent.flag==5" class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="可用余额" type="number" formControlName="AVmoney" >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div *ngIf="_parent.flag==3" class="row">
+        <div class="col">
+          <mat-form-field>
+          <mat-select formControlName="items" matInput placeholder="消费项目" >
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let i of itemList">
+              <mat-option value={{i.Item_Name}}>{{i.Item_Name}} 参考价: {{i.Item_Price}}</mat-option>
+            </ng-container>
+          </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="padding-left: 2%;" >
+            <input matInput placeholder="消费价格" formControlName="price">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+
+      <div *ngIf="_parent.flag==4" class="row">
+        <div class="col">
+
+          <mat-form-field >
+            <input matInput placeholder="新增消费项目" formControlName="newGame">
+          </mat-form-field>
+
+          <mat-form-field style="padding-left: 2%;">
+            <input matInput placeholder="新增消费价格" formControlName="newGamePrice">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-form-field *ngIf="_parent.flag==2 ||_parent.flag==1" >  
+        <input matInput placeholder="充值金额" formControlName="plusMoney">
+      </mat-form-field>
+
+      <div *ngIf="_parent.flag==10" class="row">
+        <div class="col">
+        <span> 开户统计： {{countCustomer}}   人  </span>
+        <mat-icon>person</mat-icon>
+        </div>
+      </div>
+      <div *ngIf="_parent.flag==10" class="row">
+
+        <div class="col">
+          <span> 充值统计： {{countDeposit}} 元 </span>
+          <mat-icon svgIcon="Money"></mat-icon>
+          </div>
+
+
+      </div>
+
+      <div *ngIf="_parent.flag==10" class="row">
+
+        <div class="col">
+          <span> 消费统计： {{countCharge}} 元 </span>
+          <mat-icon svgIcon="Money"></mat-icon>
+          </div>
+
+
+      </div>
+
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="addressForm.invalid">确认 </button>
+      <button mat-raised-button color="primary"  (click)="onclear()">重置</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="mat-elevation-z8">  <!--客户信息-->
+    <table mat-table [dataSource]="custSource" class="full-width-table" matSort aria-label="Elements">
+      <!-- Id Column -->
+      <ng-container matColumnDef="Customer_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header1">卡号<mat-icon svgIcon="cardnumber"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust1">{{row.Customer_ID}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Customer_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header1">姓名<mat-icon svgIcon="name"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust1">{{row.Customer_Name}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Mobile">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header1">手机号<mat-icon svgIcon="phone"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust1">{{row.Mobile}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Available_Money">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header1">金额<mat-icon svgIcon="availableMoney"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust1">{{row.Available_Money}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="CreateDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header1">创建日期<mat-icon svgIcon="date"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust1">{{row.CreateDate}}  </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="custColumns">  </tr>
+      <tr mat-row *matRowDef="let row; columns: custColumns;"></tr>
+    </table>
+    <!--<div class ="spinner-container" *ngif ="loading$ | async" >
+        <mat-spinner></mat-spinner>
+      </div>  -->
+  </div>
+
+  <div class="mat-elevation-z8">   <!--历史交易记录-->
+    <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+      <!-- Id Column -->
+      <ng-container matColumnDef="Customer_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">卡号<mat-icon svgIcon="cardnumber"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Customer_ID}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Customer_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">姓名<mat-icon svgIcon="name"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Customer_Name}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Mobile">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">手机<mat-icon svgIcon="phone"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Mobile}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Item">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">消费项目<mat-icon svgIcon="item"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Item}}</td>
+      </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Item_Price" >
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">价格<mat-icon svgIcon="charge"></mat-icon></th>
+              <td mat-cell *matCellDef="let row" class="normalCust">{{row.Item_Price}}</td>
+            </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="Charge_Date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">消费日期<mat-icon svgIcon="date"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Charge_Date}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Available_Money">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">可用余额<mat-icon svgIcon="availableMoney"></mat-icon></th>
+        <td mat-cell *matCellDef="let row" class="normalCust">{{row.Available_Money}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!--<div class ="spinner-container" *ngif ="loading$ | async" >
+        <mat-spinner></mat-spinner>
+      </div>  -->
+  <mat-paginator  [length]="total" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>  </mat-paginator> 
+  </div>
+
+</form>

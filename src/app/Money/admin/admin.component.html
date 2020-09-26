@@ -1,0 +1,83 @@
+<form [formGroup]="BossForm" (ngSubmit)="submit(BossForm)">
+    <mat-card class="shipping-card">
+
+        <mat-card-header>
+            <mat-card-title>超级管理员系统</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions>
+
+
+
+                <button mat-raised-button color="warn" type="button" (click)="flag=1"
+                    [ngClass]="ColorClass1(flag)">新增用户</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=2"
+                    [ngClass]="ColorClass2(flag)">短信充值</button>
+                <button mat-raised-button color="warn" type="button" (click)="flag=3"
+                    [ngClass]="ColorClass3(flag)">密码修改</button>
+                <button mat-raised-button color="warn" type="button" (click)="flag=4" [matMenuTriggerFor]="Enquiry"
+                    [ngClass]="ColorClass6(flag)">查询</button>
+                <button mat-raised-button color="warn" (click)="flag=5" [ngClass]="ColorClass5(flag)"
+                    [matMenuTriggerFor]="animals" type="button">其他</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=998" class="OverColor">
+                    <a [routerLink]="['/python/home']" routerLinkActive="router-link-active" >退出</a>
+                </button>
+                <mat-menu #Enquiry="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=6" [ngClass]="ColorClass6(flag)">短信模板</button>
+                    <button mat-menu-item type="submit" (click)="flag=7" [ngClass]="ColorClass7(flag)">用户信息</button>
+                </mat-menu>
+                <mat-menu #animals="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=8" [ngClass]="ColorClass6(flag)" disabled>待定</button>
+                    <button mat-menu-item type="submit" (click)="flag=9" [ngClass]="ColorClass7(flag)" disabled>待定</button>
+                </mat-menu>
+
+            <!---->
+
+
+
+
+        </mat-card-actions>
+        <mat-card-content >
+            <div class="row" *ngIf="flag==1">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="用户名" formControlName="profile">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div *ngIf="flag==3" class="row">
+              <div class="col">
+                <mat-form-field>
+                <mat-select formControlName="profile1" matInput placeholder="用户列表" >
+                  <mat-option>None</mat-option>
+                  <ng-container *ngFor="let i of result">
+                    <mat-option value={{i}}>{{i}}</mat-option>
+                  </ng-container>
+                </mat-select>
+                </mat-form-field>     
+              </div>
+            </div>
+
+
+            <div class="row" *ngIf="flag==1 ||flag==3" >
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="密码"  formControlName="password">
+                </mat-form-field>
+              </div>
+            </div>     
+            <div class="row" *ngIf="flag==1" >
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="描述"  formControlName="description">
+                  </mat-form-field>
+                </div>
+              </div>    
+      
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="BossForm.invalid">确认 </button>
+          </mat-card-actions>
+    </mat-card>
+    <mat-divider></mat-divider>
+</form>

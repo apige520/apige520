@@ -1,0 +1,105 @@
+<form [formGroup]="loginForm" (ngSubmit)="submit(loginForm)">
+    <mat-card class="shipping-card">
+        <div [hidden]="status">
+            <mat-card-header>
+                <mat-card-title>管理员登录系统</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="管理员账号" formControlName="profile">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input type="password" matInput placeholder="管理员密码" formControlName="password">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card-content>
+        </div>
+        <mat-card-actions>
+            <div [hidden]="status">
+                <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">登录
+                </button>
+            </div>
+
+            <!---->
+            <div *ngIf="status && flag!=88888">
+                <button mat-raised-button color="warn" type="submit" (click)="flag=1" [ngClass]="ColorClass1(flag)">新增</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=2" [ngClass]="ColorClass2(flag)">充值</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=3" [ngClass]="ColorClass3(flag)">消费</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=6" [matMenuTriggerFor]="Enquiry" [ngClass]="ColorClass6(flag)">查询</button>
+                <button mat-raised-button color="warn"  (click)="flag=998" [ngClass]="ColorClass998(flag)" [matMenuTriggerFor]="animals" type="button">其他</button>
+                <button mat-raised-button color="warn" type="submit" (click)="flag=999" class="OverColor">退出</button>
+                <mat-menu #Enquiry="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=6" [ngClass]="ColorClass6(flag)">个人信息</button>
+                    <button mat-menu-item type="submit" (click)="flag=7" [ngClass]="ColorClass7(flag)">历史消费记录</button>
+                    <button mat-menu-item type="submit" (click)="flag=8" [ngClass]="ColorClass8(flag)" >历史充值记录</button>
+                    <button mat-menu-item type="submit" (click)="flag=10" [ngClass]="ColorClass10(flag)">营业统计</button>
+                    <button mat-menu-item disabled>历史更改记录</button>
+                    <button mat-menu-item disabled>历史删除记录</button>
+                </mat-menu>
+                
+                <mat-menu #animals="matMenu">
+                    <button mat-menu-item [matMenuTriggerFor]="Add">新增</button>
+                    <button mat-menu-item [matMenuTriggerFor]="Enquiry">查询</button>
+                    <button mat-menu-item [matMenuTriggerFor]="Update">修改</button>
+                    <button mat-menu-item [matMenuTriggerFor]="Delete">删除</button>
+                    <button mat-menu-item [matMenuTriggerFor]="invertebrates">氪金大佬</button>
+                </mat-menu>
+
+
+                <mat-menu #invertebrates="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=9" [ngClass]="ColorClass9(flag)"
+                        disabled>一键恢复出厂设置</button>
+                </mat-menu>
+
+                <mat-menu #Add="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=1" [ngClass]="ColorClass1(flag)">客户</button>
+                    <button mat-menu-item type="submit" (click)="flag=3" [ngClass]="ColorClass3(flag)">消费</button>
+                    <button mat-menu-item type="submit" (click)="flag=4" [ngClass]="ColorClass4(flag)">消费项目</button>
+                    <button mat-menu-item type="submit" (click)="flag=2" [ngClass]="ColorClass2(flag)">充值</button>
+                </mat-menu>
+
+                <mat-menu #Enquiry="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=6" [ngClass]="ColorClass6(flag)">个人信息</button>
+                    <button mat-menu-item type="submit" (click)="flag=7" [ngClass]="ColorClass7(flag)">历史消费记录</button>
+                    <button mat-menu-item type="submit" (click)="flag=8" [ngClass]="ColorClass8(flag)"
+                        disabled>历史充值记录</button>
+                    <button mat-menu-item disabled>历史更改记录</button>
+                    <button mat-menu-item disabled>历史删除记录</button>
+                </mat-menu>
+
+                <mat-menu #Update="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=5" [ngClass]="ColorClass5(flag)"
+                        >客户信息</button>
+                    <button mat-menu-item type="submit" (click)="flag=4" [ngClass]="ColorClass4(flag)"
+                        disabled>消费项目信息</button>
+                </mat-menu>
+
+                <mat-menu #Delete="matMenu">
+                    <button mat-menu-item type="submit" (click)="flag=11" >删除客户</button>
+                    <button mat-menu-item type="submit" (click)="flag=4" [ngClass]="ColorClass4(flag)"
+                        disabled>删除项目</button>
+                </mat-menu>
+            </div>
+            <!---->
+
+
+
+
+        </mat-card-actions>
+    </mat-card>
+    <mat-divider></mat-divider>
+</form>
+<div *ngIf="flag!=0 && flag!=999 && flag!=88888">
+    <app-customer-search></app-customer-search>
+</div>
+<div *ngIf="flag==88888"> 
+    <app-admin></app-admin>
+</div>

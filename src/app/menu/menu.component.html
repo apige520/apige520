@@ -1,0 +1,44 @@
+<button mat-button [matMenuTriggerFor]="aboveMenu">游戏</button>
+<!-- #docregion menu-position -->
+<mat-menu #aboveMenu="matMenu" yPosition="above">
+<!-- #enddocregion menu-position -->
+  <button mat-menu-item>
+    <a [routerLink]="['/game/DNFcustomer']" routerLinkActive="router-link-active" >DNF游客</a>
+  </button>
+  <button mat-menu-item>
+    <a [routerLink]="['/game/DNFAdmin']" routerLinkActive="router-link-active" >DNF管理员</a>
+  </button>
+</mat-menu>
+
+<button mat-button [matMenuTriggerFor]="belowMenu">爬虫</button>
+<mat-menu #belowMenu="matMenu" yPosition="below">
+  <button mat-menu-item>
+    <a [routerLink]="['/python/DouBan']" routerLinkActive="router-link-active" >豆瓣评分</a>
+  </button>
+  <button mat-menu-item>
+    <a [routerLink]="['/python/Video']" routerLinkActive="router-link-active" >视频提取</a>
+  </button>
+  <button mat-menu-item>
+    <a [routerLink]="['/python/DanMu']" routerLinkActive="router-link-active" >弹幕提取</a>
+  </button>
+</mat-menu>
+
+<button mat-button [matMenuTriggerFor]="beforeMenu">财务</button>
+<mat-menu #beforeMenu="matMenu" xPosition="before">
+  <button mat-menu-item>
+    <a [routerLink]="['/money/CustomerManager']" routerLinkActive="router-link-active" >会员管理系统</a>
+  </button>
+  <button mat-menu-item>待定</button>
+</mat-menu>
+
+
+<button mat-button [matMenuTriggerFor]="afterMenu">其他</button>
+<mat-menu #afterMenu="matMenu" xPosition="after">
+  <button mat-menu-item>
+    <a [routerLink]="['/others/PersonalDisk']" routerLinkActive="router-link-active" >私人网盘</a>
+  </button>
+  <button mat-menu-item>
+    <a [routerLink]="['/others/Diary']" routerLinkActive="router-link-active" >日记</a>
+  </button>
+  <button mat-menu-item>作者联系微信：apige520</button>
+</mat-menu>

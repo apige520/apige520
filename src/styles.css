@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+div.container{
+    margin: 0px 40px;
+}
+
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+
+form.normal-form{
+    margin:10px;
+}
+
+.controles-container{
+    width:50%;
+    padding: 5%;
+}
+
+.controles-container > * {
+    width:100%;
+    }
+    .add-bottom-padding{
+        padding-bottom: 10px;
+    }
+mat-radio-group mat-radio-button{
+    margin-left: 5px;
+}
+.button-row button{
+    margin: 5px;
+}
+
+.tableheader{
+    width:40%;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.content-list.mat-figure{
+    justify-content: flex-start !important;
+    align-items: baseline !important ;
+}
+.content-list{
+    margin-left: 0%;
+    margin-right:50%;
+}
+.expr-table-header{
+    color:wheat;
+    font-family: fantasy;
+    background-color:black;
+}
+.expr-table-header1{
+    font-family: fantasy;
+    color: black;
+}
+.mat-fab .mat-button-wrapper {
+    padding: 16px 0;
+    display: inline-block;
+    line-height: 12px;
+}
+.bg{
+    background-image: url(../src/assets/img/bg2.jpg);
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
