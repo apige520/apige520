@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
   public DB_Password: any;
   public DB_Name: any;
   BossForm:FormGroup;
-  url_Production: string = "http://localhost:82/"       //"http://www.apige520.com:82/"
+  url_Production: string = "http://www.apige520.com:82/"       //"http://www.apige520.com:82/"
   url_local: string = "http://localhost:82/"      //"http://localhost:82/"
   constructor(public _snackBar: MatSnackBar,private http: HttpClient) { }
 

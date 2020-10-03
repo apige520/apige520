@@ -13,6 +13,7 @@ import {CustomerManageComponent  } from "./Money/customer-manage/customer-manage
 //其他组
 import { PersonalDiskComponent } from "./others/personal-disk/personal-disk.component";
 import { DiaryComponent } from "./others/diary/diary.component";
+import { WaiguaComponent} from "./others/waigua/waigua.component";
 const routes: Routes = [
   {path: 'game/DNFcustomer', component: DNFcustomerComponent},
   {path: 'game/DNFAdmin', component: DNFAdminComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'money/CustomerManager', component:CustomerManageComponent},
   {path: 'others/PersonalDisk', component:PersonalDiskComponent},
   {path: 'others/Diary', component:DiaryComponent},
+  {path: 'others/Waigua', component:WaiguaComponent},
   {path: '**',redirectTo:'money/CustomerManager'}
 ];
 

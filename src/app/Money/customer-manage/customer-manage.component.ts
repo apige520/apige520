@@ -77,7 +77,7 @@ if(this.flag==4){
   this.openSnackBar(this.w0title, w0reminder)
 }
 if(this.flag==5){
-  this.w0title = '跳转会员更新'
+  this.w0title = '跳转会员更新(暂时只能更新余额，卡号必须输入）'
   this.openSnackBar(this.w0title, w0reminder)
 }
 if(this.flag==6){
@@ -105,7 +105,7 @@ if(this.flag==10){
 
 if(this.flag==999){
 this.loginForm.reset({
-  profile: ({value:'Admin',disabled:true}),
+  profile: '',
   password:'',
 });
 this.status=false;

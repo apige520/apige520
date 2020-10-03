@@ -81,7 +81,7 @@
           </mat-form-field>
 
           <mat-form-field style="padding-left: 2%;" >
-            <input matInput placeholder="消费价格" formControlName="price">
+            <input matInput placeholder="消费价格" type="number"  formControlName="price">
           </mat-form-field>
 
         </div>
@@ -227,7 +227,7 @@
     <!--<div class ="spinner-container" *ngif ="loading$ | async" >
         <mat-spinner></mat-spinner>
       </div>  -->
-  <mat-paginator  [length]="total" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>  </mat-paginator> 
+  <mat-paginator  [length]="total" [pageIndex]="0" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>  </mat-paginator> 
   </div>
 
 </form>

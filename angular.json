@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "FighterApp"
+  "defaultProject": "FighterApp",
+  "cli": {
+    "analytics": "6eb7ec9a-3371-47fc-b335-2e78eb36d672"
+  }
 }

@@ -123,7 +123,7 @@ export class CustomerSearchComponent {
   AVmoneyFlag: boolean = true
   DateStartFlag: boolean = true
   DateEndFlag: boolean = true
-  url_Production: string = "http://localhost:82/"       //"http://www.apige520.com:82/"
+  url_Production: string = "http://www.apige520.com:82/"       //"http://www.apige520.com:82/"
   url_local: string = "http://localhost:82/"      //"http://localhost:82/"
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['Customer_ID', 'Customer_Name', 'Mobile', 'Item', 'Item_Price', 'Charge_Date', 'Available_Money'];
@@ -156,12 +156,12 @@ export class CustomerSearchComponent {
     this.addressForm = new FormGroup({
       name: new FormControl(''),
       mobile: new FormControl('', [Validators.maxLength(11), Validators.min(0)]),
-      cardNumber: new FormControl('', Validators.maxLength(11)),
-      plusMoney: new FormControl('', Validators.min(0)),
+      cardNumber: new FormControl('', Validators.max(999999999)),
+      plusMoney: new FormControl('', [Validators.min(0),Validators.max(999999)]),
       items: new FormControl(''),
-      price: new FormControl('', Validators.min(1)),
+      price: new FormControl('', [Validators.min(1),Validators.max(999999)]),
       newGame: new FormControl(''),
-      newGamePrice: new FormControl('', Validators.min(1)),
+      newGamePrice: new FormControl('', [Validators.min(1),Validators.max(999999)]),
       AVmoney: new FormControl(''),
       DateStart: new FormControl(''),
       DateEnd: new FormControl('')
@@ -252,7 +252,7 @@ export class CustomerSearchComponent {
 
 
       if (isNaN(this.w1plusMoney)) {
-        this.w0title = '充钱充钱当大佬必须是整数呀'
+        this.w0title = '充钱当大佬必须是整数呀'
         this.openSnackBar(this.w0title, w0warn)
       }
       else {
@@ -262,31 +262,24 @@ export class CustomerSearchComponent {
         }
 
         else {
+
           await this.addMoney();
         }
       }
 
     }
 
-    if (this._parent.flag == 3) { //消费
-
-      if (this.w0cardNumber == '') {
-        this.w0title = '请输入卡号！'
-        this.openSnackBar(this.w0title, w0warn)
-      }
-      await this.enquiryCustomer()
-      if (this.custTotal == 1 && this.w0itemPrice !== "" && this.w1availableMoney >= this.w1itemPrice && this.w0item != "") {
-        await this.costProcess();
-      }
-      else {
-        if (this.custTotal != 1) {
-          this.w0title = '请指定特定唯一的客户信息'
+    if (this._parent.flag == 3) { //消费 {
+        if (this.w0cardNumber == '') {
+          this.w0title = '请输入卡号！'
           this.openSnackBar(this.w0title, w0warn)
         } else
           if (this.w0item == "") {
             this.w0title = '请输入消费项目'
             this.openSnackBar(this.w0title, w0warn)
-          } else
+          } 
+          
+          else
             if (this.w0itemPrice == "") {
               this.w0title = '消费价格不能为空'
               this.openSnackBar(this.w0title, w0error)
@@ -295,12 +288,7 @@ export class CustomerSearchComponent {
                 this.w0title = '消费价格必须是整数呀!'
                 this.openSnackBar(this.w0title, w0error)
               } else
-                if (this.w1availableMoney < this.w1itemPrice) {
-                  this.w0title = '赶紧充钱吧臭妹妹，你的余额已经不足'
-                  this.openSnackBar(this.w0title, w0error)
-                }
-      }
-
+              this.costProcess()
     }
     if (this._parent.flag == 4) { //新建消费项目
       if (this.w0newGamePrice == "" || this.w0newGame == "") {
@@ -396,7 +384,7 @@ export class CustomerSearchComponent {
   //消息提醒
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
-      duration: 3000,
+      duration: 2000,
     });
   }
   //交易历史记录
@@ -478,7 +466,7 @@ export class CustomerSearchComponent {
       console.log(this.anyList)
       this.result = this.anyList.message;
       this.submitFlag = true;
-      this.custTotal = this.result.length;
+     // this.custTotal = this.result.length;
       this.custItem = [];
       for (let i = 0; i < this.result.length; i++) {
         this.custItem.push(this.result[i])
@@ -634,9 +622,9 @@ export class CustomerSearchComponent {
   //消费
   costProcess() {
     let params = {
-      "name": this.w1name,
-      "mobile": this.w1mobile,
-      "cardNumber": this.w1cardNumber,
+      "name": '%' + this.w0name + '%',
+      "mobile": this.w0mobile + '%',
+      "cardNumber": this.w0cardNumber + '%',
       "createDate": this.w0date,
       "item": this.w0item,
       "itemPrice": this.w0itemPrice,
@@ -646,14 +634,25 @@ export class CustomerSearchComponent {
     }
     var url = this.url_Production + "Money/CustomerManager/Cost"
     this.http.post(url, params, { headers: headers })
-      .subscribe(res => {
-        this.anyList = res
-        this.w0title = '消费成功'
-        this.enquiryCustomer();
-        this.openSnackBar(this.w0title, w0reminder)
-        console.log(this.anyList)
-      })
-  }
+    .subscribe(res => {
+      this.anyList = res
+      console.log(this.anyList);
+      this.result = this.anyList.data;
+      this.submitFlag = true;
+      this.custTotal = this.result.length;
+      this.custItem = [];
+      for (let i = 0; i < this.result.length; i++) {
+        this.custItem.push(this.result[i])
+        this.w1cardNumber = this.custItem[0].Customer_ID
+        this.w1mobile = this.custItem[0].Mobile
+        this.w1name = this.custItem[0].Customer_Name
+        this.w1availableMoney = this.custItem[0].Available_Money
+      }
+      this.custSource = new MatTableDataSource<PeriodicCustElement>(this.custItem)
+      this.w0title = this.anyList.message
+      this.openSnackBar(this.w0title, w0reminder)
+    })
+}
 
   //新增消费项目
   newItem() {

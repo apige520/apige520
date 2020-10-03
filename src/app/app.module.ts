@@ -41,7 +41,8 @@ import { DanmuDetailComponent } from './python/dan-mu/danmu-detail/danmu-detail.
 import { DoubanDetailComponent } from './python/dou-ban/douban-detail/douban-detail.component';
 import { VideoDetailComponent } from './python/video/video-detail/video-detail.component';
 import { DiaryComponent } from './others/diary/diary.component';
-import { AdminComponent } from './Money/admin/admin.component'
+import { AdminComponent } from './Money/admin/admin.component';
+import { WaiguaComponent } from './others/waigua/waigua.component'
 //import { QuillModule } from 'ngx-quill'
 
 @NgModule({
@@ -67,6 +68,7 @@ import { AdminComponent } from './Money/admin/admin.component'
     VideoDetailComponent,
     DiaryComponent,
     AdminComponent,
+    WaiguaComponent,
 //    QuillModule
   ],
   imports: [

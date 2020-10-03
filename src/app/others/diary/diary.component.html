@@ -1,1 +1,108 @@
+<form [formGroup]="BossForm" (ngSubmit)="submit(BossForm)">
+    <mat-card class="shipping-card">
 
+        <mat-card-header>
+            <mat-card-title>超级日记系统</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions>
+
+            <div class="row">
+                <div class="col">
+                  <mat-radio-group formControlName="flag" >
+                    <mat-radio-button value='1' >查询日记</mat-radio-button>
+                    <mat-radio-button value='2'>新建日记</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+        </mat-card-actions>
+        <mat-card-content>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field>
+                        <mat-select formControlName="author" matInput placeholder="作者">
+                            <mat-option>None</mat-option>
+                            <ng-container *ngFor="let i of result2">
+                                <mat-option value={{i.author}}>{{i.author}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field>
+                        <mat-select formControlName="weather" matInput placeholder="天气">
+                            <mat-option>None</mat-option>
+                            <ng-container *ngFor="let i of result1">
+                                <mat-option value={{i.weather}}>{{i.weather}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field style="width: 180px">
+                        <input matInput placeholder="密码（必填）" type="password" formControlName="password">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="日记具体内容" formControlName="detail">
+                  </mat-form-field>
+                </div>
+              </div>
+            
+
+
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="BossForm.invalid">提交 </button>
+        </mat-card-actions>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <div class="mat-elevation-z8">   <!--历史交易记录-->
+        <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+          <!-- Id Column -->
+          <ng-container matColumnDef="Author">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">主角</th>
+            <td mat-cell *matCellDef="let row" class="normalCust" style ="white-space: nowrap">{{row.user_name}}</td>
+          </ng-container>
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">创作日期</th>
+            <td mat-cell *matCellDef="let row" class="normalCust">{{row.date}}</td>
+          </ng-container>
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="Detail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">日记内容</th>
+            <td mat-cell *matCellDef="let row" class="normalCust">{{row.detail}}</td>
+          </ng-container>
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="Weather">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">天气</th>
+            <td mat-cell *matCellDef="let row" class="normalCust" style="white-space: nowrap">{{row.weather}}</td>
+          </ng-container>
+    
+                <!-- Name Column -->
+                <ng-container matColumnDef="TotalDay" >
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="expr-table-header">恋爱指数</th>
+                  <td mat-cell *matCellDef="let row" class="normalCust">{{row.totalDay}}</td>
+                </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      <mat-paginator  [length]="total" [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[10, 50, 1000]" showFirstLastButtons>  </mat-paginator> 
+      </div>
+</form>
