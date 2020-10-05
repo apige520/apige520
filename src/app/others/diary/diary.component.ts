@@ -52,7 +52,7 @@ export class DiaryComponent implements OnInit {
   public DB_Password: any;
   public DB_Name: any;
   BossForm:FormGroup;
-  url_Production: string = "http://localhost:82/"       //"http://www.apige520.com:82/"
+  url_Production: string = "http://www.apige520.com:82/"       //"http://www.apige520.com:82/"
   url_local: string = "http://localhost:82/"      //"http://localhost:82/"
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort
