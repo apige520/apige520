@@ -27,6 +27,7 @@ const headers = {
   styleUrls: ['./diary.component.css']
 })
 export class DiaryComponent implements OnInit {
+  SMSFLAG:boolean =false
   itemList: []
   total: number = 0;
   custTotal: number = 0;
@@ -51,7 +52,7 @@ export class DiaryComponent implements OnInit {
   public DB_Password: any;
   public DB_Name: any;
   BossForm:FormGroup;
-  url_Production: string = "http://www.apige520.com:82/"       //"http://www.apige520.com:82/"
+  url_Production: string = "http://localhost:82/"       //"http://www.apige520.com:82/"
   url_local: string = "http://localhost:82/"      //"http://localhost:82/"
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort
@@ -91,10 +92,12 @@ export class DiaryComponent implements OnInit {
     } else 
   if(this.flag=='1'){
     this.EnquiryDiary()
+    this.SMSFLAG =true
   } else
 
   if(this.flag=='2'){
     this.CreateDiary()
+    this.SMSFLAG =true
 }
 else
 
@@ -165,6 +168,27 @@ this.flag='0';
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+  }
+
+  SendSMS(){
+    if(window.confirm('是否需要给溪溪宝贝发送短信！？')){
+      //alert("确定");
+      let params = {
+        "Mobile": 18671178805
+      }
+      var url = this.url_Production + "Others/SMS/"
+      this.http.post(url,params,{ headers: headers }).subscribe(res => {
+        this.anyList = res
+        console.log(this.anyList)
+        this.w0title = this.anyList
+        this.openSnackBar(this.w0title, w0reminder)
+      });
+    }
+
+ else{
+      //alert("取消");
+
+ }
   }
 
   EnquiryUserList(){
